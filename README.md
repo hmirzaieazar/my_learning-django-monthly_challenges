@@ -143,7 +143,7 @@ def monthly_challenges(request, month):
 
 ```python
 urlpatterns = [
-    path("<int:month>", views.monthly_challenges),
+    path("<int:month>/", views.monthly_challenges_by_number),
 ]
 ```
 
@@ -151,9 +151,37 @@ or:
 
 ```python
 urlpatterns = [
-    path("<str:month>", views.monthly_challenges),
+    path("<str:month>/", views.monthly_challenges),
 ]
 ```
 
 You can define both URL patterns, but the **order matters**.
 The `<int:month>` path must be placed **before** the `<str:month>` path; otherwise, the string converter will match first, and the integer path will never be reached.
+
+### Giving a Name to a URL and Using the `reverse` Function for Redirection
+
+First, assign a **name** to the URL pattern in `urls.py`. This allows Django to refer to the URL dynamically instead of hardcoding paths.
+
+```python
+urlpatterns = [
+    path("<str:month>/", views.monthly_challenges, name="month-challenge"),
+]
+```
+
+Next, use Django’s `reverse` function inside the view to generate the URL and redirect the user:
+
+```python
+def monthly_challenge_by_number(request, month):
+    if month != 0 and month <= len(planned_challenges_of_month):
+        months = list(planned_challenges_of_month.keys())
+        redirected_month = months[month - 1]
+        redirected_path = reverse(
+            viewname="month-challenge",
+            kwargs={"month": redirected_month},
+        )
+        return HttpResponseRedirect(redirected_path)
+    else:
+        return HttpResponseNotFound("The entered month is not valid!!!")
+```
+
+Using `reverse()` ensures that URLs are generated dynamically based on their name, making the code more maintainable and less error-prone if URL patterns change in the future.
