@@ -110,3 +110,50 @@ urlpatterns = [
 ```
 
 `include("app_name.file_name")` is the file_name(without .py) in which URLs exist.
+Without `/` it does not work!
+
+### Dynamic Path
+
+To define a **dynamic URL pattern**, add the following path in `challenges/urls.py`:
+
+```python
+urlpatterns = [
+    path("<month>", views.monthly_challenges),
+]
+```
+
+Next, define the corresponding view function in `challenges/views.py`:
+
+```python
+from django.http import HttpResponseNotFound
+
+def monthly_challenges(request, month):
+    challenge_text = None
+    if month == "january":
+        challenge_text = "Eat no meat for the entire month!"
+    elif month == "febuary":
+        challenge_text = "Do exercise for the entire month!"
+    else:
+        return HttpResponseNotFound("This month is not supported!")
+
+    return HttpResponse(challenge_text)
+```
+
+#### More Specific Dynamic Path
+
+```python
+urlpatterns = [
+    path("<int:month>", views.monthly_challenges),
+]
+```
+
+or:
+
+```python
+urlpatterns = [
+    path("<str:month>", views.monthly_challenges),
+]
+```
+
+You can define both URL patterns, but the **order matters**.
+The `<int:month>` path must be placed **before** the `<str:month>` path; otherwise, the string converter will match first, and the integer path will never be reached.
