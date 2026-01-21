@@ -280,3 +280,105 @@ def monthly_challenge(request, month):
     except:
         return HttpResponseNotFound("The entered month is not valid!")
 ```
+
+## Django Template Language (DTL)
+
+The **Django Template Language (DTL)** allows you to add logic and dynamic content to your HTML templates while keeping them clean and readable.
+
+---
+
+### Built-in Template Tags
+
+Template tags control logic such as loops, conditions, URL generation, and template inheritance.
+
+---
+
+#### `for` Tag
+
+Used to loop over a list or dictionary.
+
+```html
+<ul>
+{% for month in months %}
+    <li>{{ month }}</li>
+{% endfor %}
+</ul>
+```
+
+#### `if` Tag
+
+Used to display content conditionally.
+
+```html
+{% if month_challenge is not None %}
+    <h2>{{ month_challenge }}</h2>
+{% else %}
+    <h2>No challenge has been defined for this month!</h2>
+{% endif %}
+```
+
+#### `url` Tag
+
+Generates URLs dynamically using the name of a URL pattern.
+
+```html
+<a href="{% url "month-challenge" month=month %}">
+```
+
+This avoids hardcoding URLs and makes templates easier to maintain.
+
+#### `block` Tag
+
+The `{% block %}` tag is used with **template inheritance** to define sections of a template that child templates can override.
+
+You can define **base (global) templates** inside: `BASE_DIR / "templates"`.
+
+---
+
+##### Base Template (`base.html`)
+
+```html
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{% block title %}{% endblock %}</title>
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+    </body>
+</html>
+```
+
+This base template defines reusable blocks for the page title and body content.
+
+---
+
+##### Child Template (App Template)
+
+Child templates extend the base template and override the defined blocks.
+
+```html
+{% extends "base.html" %}
+
+{% block title %}Monthly Challenges{% endblock %}
+
+{% block body %}
+<ul>
+    {% for month in months %}
+        <li><a href="{% url "month-challenge" month=month %}">{{ month|title }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}
+```
+
+---
+
+### Built-in Template Filters
+
+#### `title` Filter
+
+```html
+<h1>{{ month|title }}</h1>
+```
