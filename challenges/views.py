@@ -16,7 +16,7 @@ planned_challenges_of_month = {
     "august": "H",
     "september": "I",
     "october": "J",
-    "november": "K",
+    "november": None,
     "december": "L",
 }
 

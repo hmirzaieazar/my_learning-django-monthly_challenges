@@ -4,5 +4,9 @@
 
 {% block body %}
     <h1>Challenge of {{ month }}</h1>
-    <h2>{{ month_challenge }}</h2>
+    {% if month_challenge is not None %}
+        <h2>{{ month_challenge }}</h2>
+    {% else %}
+        <h2>No challenge has been defined for this month!</h2>
+    {% endif %}
 {% endblock %}
