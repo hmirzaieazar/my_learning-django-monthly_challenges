@@ -22,11 +22,8 @@ planned_challenges_of_month = {
 
 
 def index(request):
-    response = ""
-    for month in planned_challenges_of_month:
-        ref_path = reverse("month-challenge", kwargs={"month": month})
-        response += f"<li><a href='{ref_path}'>{month}</a></li>"
-    return HttpResponse(f"<ul>{response}</ul>")
+    months = list(planned_challenges_of_month.keys())
+    return render(request, "challenges/index.html", {"months": months})
 
 
 def monthly_challenge_by_number(request, month):
