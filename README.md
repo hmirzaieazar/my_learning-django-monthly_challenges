@@ -1,5 +1,36 @@
 # Django
 
+This repository contains a summary of what I learned during my Django course on Udemy, including key concepts, examples, and best practices.
+
+## Table of Contents
+
+- [Django](#django)
+  - [Table of Contents](#table-of-contents)
+  - [Installing Django](#installing-django)
+  - [Create a Django Project](#create-a-django-project)
+  - [Start Development Server](#start-development-server)
+  - [Django Apps (Create an App)](#django-apps-create-an-app)
+  - [Creating View and URL](#creating-view-and-url)
+    - [Dynamic Path](#dynamic-path)
+      - [More Specific Dynamic Path](#more-specific-dynamic-path)
+    - [Giving a Name to a URL and Using the `reverse` Function for Redirection](#giving-a-name-to-a-url-and-using-the-reverse-function-for-redirection)
+  - [Django Templates](#django-templates)
+    - [Reading Template Files Using `render_to_string`](#reading-template-files-using-render_to_string)
+    - [Configuring Template Directories](#configuring-template-directories)
+      - [Recommended for Global Templates](#recommended-for-global-templates)
+      - [Recommended for App-Specific Templates](#recommended-for-app-specific-templates)
+    - [Using Django’s `render` Shortcut](#using-djangos-render-shortcut)
+  - [Django Template Language (DTL)](#django-template-language-dtl)
+    - [Built-in Template Tags](#built-in-template-tags)
+      - [`for` Tag](#for-tag)
+      - [`if` Tag](#if-tag)
+      - [`url` Tag](#url-tag)
+      - [`block` Tag](#block-tag)
+        - [Base Template (`base.html`)](#base-template-basehtml)
+        - [Child Template (App Template)](#child-template-app-template)
+    - [Built-in Template Filters](#built-in-template-filters)
+      - [`title` Filter](#title-filter)
+
 ## Installing Django
 
 First, create a virtual environemnt
