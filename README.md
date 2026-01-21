@@ -185,3 +185,98 @@ def monthly_challenge_by_number(request, month):
 ```
 
 Using `reverse()` ensures that URLs are generated dynamically based on their name, making the code more maintainable and less error-prone if URL patterns change in the future.
+
+## Django Templates
+
+### Reading Template Files Using `render_to_string`
+
+You can render an HTML template into a string using Django’s `render_to_string` function and return it as an HTTP response.
+
+```python
+from django.template.loader import render_to_string
+
+def monthly_challenge(request, month):
+    try:
+        text_challenge = planned_challenges_of_month[month]
+        html_response = render_to_string("challenges/challenge.html")
+        return HttpResponse(html_response)
+    except:
+        return HttpResponseNotFound("The entered month is not valid!")
+```
+
+### Configuring Template Directories
+
+Next, you need to tell Django where to find your template files. This configuration is done in `settings.py`.
+
+Navigate to `monthly_challenges/settings.py`. There are two common approaches to configuring templates:
+
+#### Recommended for Global Templates
+
+This approach is useful when you want to store templates that are shared across multiple apps.
+
+```python
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        "DIRS": [
+            BASE_DIR / "templates",
+        ],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+```
+
+#### Recommended for App-Specific Templates
+
+This approach is ideal when each app manages its own templates.
+
+Make sure that `APP_DIRS` is set to True, then place your templates inside the app’s templates directory (e.g., `challenges/templates/`).
+
+```python
+TEMPLATES = [
+    {
+        ...
+        "DIRS": [],
+        'APP_DIRS': True,
+        ...
+    },
+]
+```
+
+Also, ensure that your app is registered in `INSTALLED_APPS`:
+
+```python
+INSTALLED_APPS = [
+    "challenges",  # defined in challenges/apps.py
+    ...
+]
+```
+
+### Using Django’s `render` Shortcut
+
+Instead of manually rendering a template to a string with `render_to_string`, Django provides the `render` shortcut, which combines template rendering and HTTP response creation in a single step.
+
+This is the **recommended and cleaner approach**.
+
+```python
+from django.shortcuts import render
+from django.http import HttpResponseNotFound
+
+def monthly_challenge(request, month):
+    try:
+        text_challenge = planned_challenges_of_month[month]
+        return render(
+            request,
+            "challenges/challenge.html",
+            {"month": month, "month_challenge": text_challenge},
+        )
+    except:
+        return HttpResponseNotFound("The entered month is not valid!")
+```
