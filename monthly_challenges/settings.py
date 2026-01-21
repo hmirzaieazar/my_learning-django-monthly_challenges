@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "challenges",  # the name comes from the challenges/apps.py
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -55,7 +56,7 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
-            BASE_DIR / "challenges" / "templates",
+            # BASE_DIR / "challenges" / "templates",
         ],
         "APP_DIRS": True,
         "OPTIONS": {
