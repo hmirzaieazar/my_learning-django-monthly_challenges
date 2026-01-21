@@ -1,12 +1,8 @@
-<!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Challenge of Month</title>
-    </head>
-    <body>
-        <h1>Challenge of Month</h1>
-        <h2>Here should be the description of the challenge!</h2>
-    </body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Challenge of {{ month }}{% endblock %}
+
+{% block body %}
+    <h1>Challenge of {{ month }}</h1>
+    <h2>{{ month_challenge }}</h2>
+{% endblock %}

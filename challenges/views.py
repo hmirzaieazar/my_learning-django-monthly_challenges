@@ -45,8 +45,10 @@ def monthly_challenge_by_number(request, month):
 def monthly_challenge(request, month):
     try:
         text_challenge = planned_challenges_of_month[month]
-        # return HttpResponse(f"Challenge of {month} is {text_challenge}")
-        html_response = render_to_string("challenges/challenge.html")
-        return HttpResponse(html_response)
+        return render(
+            request,
+            "challenges/challenge.html",
+            {"month": month, "month_challenge": text_challenge},
+        )
     except:
         return HttpResponseNotFound("The entered month is not valid!")
