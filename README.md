@@ -33,6 +33,8 @@ This repository contains a summary of what I learned during my Django course on 
         - [Including the Snippet in Templates](#including-the-snippet-in-templates)
     - [Built-in Template Filters](#built-in-template-filters)
       - [`title` Filter](#title-filter)
+  - [Using `Http404` as a Shortcut](#using-http404-as-a-shortcut)
+    - [Without `Http404` (Manual Response)](#without-http404-manual-response)
 
 ## Installing Django
 
@@ -448,4 +450,23 @@ You can include this snippet in any template using the `{% include %}` tag:
 
 ```html
 <h1>{{ month|title }}</h1>
+```
+
+## Using `Http404` as a Shortcut
+
+Instead of manually returning an `HttpResponseNotFound`, Django provides the `Http404` exception as a **shortcut** for handling “not found” errors.
+
+This approach is **cleaner** and allows Django to handle the response using its standard 404 mechanism (including custom 404 templates).
+
+---
+
+### Without `Http404` (Manual Response)
+
+```python
+from django.http import HttpResponseNotFound
+```
+
+```python
+reponse_text = render_to_string("404.html")
+return HttpResponseNotFound(reponse_text)
 ```

@@ -36,7 +36,8 @@ def monthly_challenge_by_number(request, month):
         )
         return HttpResponseRedirect(redirected_path)
     else:
-        return HttpResponseNotFound("The entered month is not valid!!!")
+        reponse_text = render_to_string("404.html")
+        return HttpResponseNotFound(reponse_text)
 
 
 def monthly_challenge(request, month):
@@ -48,4 +49,5 @@ def monthly_challenge(request, month):
             {"month": month, "month_challenge": text_challenge},
         )
     except:
-        return HttpResponseNotFound("The entered month is not valid!")
+        reponse_text = render_to_string("404.html")
+        return HttpResponseNotFound(reponse_text)
