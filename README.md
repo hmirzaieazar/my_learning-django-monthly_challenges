@@ -35,6 +35,7 @@ This repository contains a summary of what I learned during my Django course on 
       - [`title` Filter](#title-filter)
   - [Using `Http404` as a Shortcut](#using-http404-as-a-shortcut)
     - [Without `Http404` (Manual Response)](#without-http404-manual-response)
+    - [Using Http404 (Recommended Shortcut)](#using-http404-recommended-shortcut)
 
 ## Installing Django
 
@@ -470,3 +471,18 @@ from django.http import HttpResponseNotFound
 reponse_text = render_to_string("404.html")
 return HttpResponseNotFound(reponse_text)
 ```
+
+### Using Http404 (Recommended Shortcut)
+
+```python
+from django.http import Http404
+```
+
+```python
+raise Http404("The entered month is not valid!")
+```
+
+When using Django’s `Http404` shortcut, it is **required** that the error template is named **`404.html`**.
+
+Django automatically looks for a template with this **exact name** when a `Http404` exception is raised.  
+If the file name is different, Django will not render the custom error page.
