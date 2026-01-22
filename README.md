@@ -28,6 +28,9 @@ This repository contains a summary of what I learned during my Django course on 
       - [`block` Tag](#block-tag)
         - [Base Template (`base.html`)](#base-template-basehtml)
         - [Child Template (App Template)](#child-template-app-template)
+      - [`include` Tag](#include-tag)
+        - [Example: Reusable HTML Snippet](#example-reusable-html-snippet)
+        - [Including the Snippet in Templates](#including-the-snippet-in-templates)
     - [Built-in Template Filters](#built-in-template-filters)
       - [`title` Filter](#title-filter)
 
@@ -402,6 +405,39 @@ Child templates extend the base template and override the defined blocks.
     {% endfor %}
 </ul>
 {% endblock %}
+```
+
+---
+
+#### `include` Tag
+
+The `{% include %}` tag allows you to reuse **HTML snippets** across multiple templates.  
+It is especially useful for components such as headers, footers, navigation bars, or any repeated UI elements.
+
+This helps keep templates **DRY (Don’t Repeat Yourself)** and easier to maintain.
+
+---
+
+##### Example: Reusable HTML Snippet
+
+Create a reusable template snippet, for example a header:
+
+`challenges/includes/header.html`
+
+```html
+<header>
+    <nav>
+        <a href="{% url "all-challenges" %}">All Challenges</a>
+    </nav>
+</header>
+```
+
+##### Including the Snippet in Templates
+
+You can include this snippet in any template using the `{% include %}` tag:
+
+```html
+{% include "challenges/includes/header.html" %}
 ```
 
 ---
