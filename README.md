@@ -36,6 +36,10 @@ This repository contains a summary of what I learned during my Django course on 
   - [Using `Http404` as a Shortcut](#using-http404-as-a-shortcut)
     - [Without `Http404` (Manual Response)](#without-http404-manual-response)
     - [Using Http404 (Recommended Shortcut)](#using-http404-recommended-shortcut)
+    - [Static Files (CSS, JavaScript, Images)](#static-files-css-javascript-images)
+      - [Adding App-Specific Static Files](#adding-app-specific-static-files)
+      - [Recommended Folder Structure](#recommended-folder-structure)
+      - [Linking CSS Files in Templates](#linking-css-files-in-templates)
 
 ## Installing Django
 
@@ -486,3 +490,49 @@ When using Django’s `Http404` shortcut, it is **required** that the error temp
 
 Django automatically looks for a template with this **exact name** when a `Http404` exception is raised.  
 If the file name is different, Django will not render the custom error page.
+
+### Static Files (CSS, JavaScript, Images)
+
+Django provides built-in support for managing **static files** such as CSS, JavaScript, and images.
+
+---
+
+#### Adding App-Specific Static Files
+
+For **app-level static files**, Django automatically looks for a folder named `static` inside each installed app.  
+No additional configuration is required.
+
+---
+
+#### Recommended Folder Structure
+
+Inside your app, create a `static` directory.  
+As a best practice, create another folder inside it named after the app.
+
+Example for the `challenges` app:
+
+```text
+challenges/
+├── static/
+│   └── challenges/
+│       └── challenge.css
+├── templates/
+├── views.py
+└── apps.py
+```
+
+This prevents file name collisions when multiple apps use static files.
+
+#### Linking CSS Files in Templates
+
+First, load the static template tag at the top of your template:
+
+```html
+{% load static %}
+```
+
+Then, reference the CSS file using the `{% static %}` tag:
+
+```html
+<link rel="stylesheet" href="{% static 'challenges/challenge.css' %}">
+```
