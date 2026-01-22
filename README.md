@@ -36,10 +36,13 @@ This repository contains a summary of what I learned during my Django course on 
   - [Using `Http404` as a Shortcut](#using-http404-as-a-shortcut)
     - [Without `Http404` (Manual Response)](#without-http404-manual-response)
     - [Using Http404 (Recommended Shortcut)](#using-http404-recommended-shortcut)
-    - [Static Files (CSS, JavaScript, Images)](#static-files-css-javascript-images)
-      - [Adding App-Specific Static Files](#adding-app-specific-static-files)
+  - [Static Files (CSS, JavaScript, Images)](#static-files-css-javascript-images)
+    - [Adding App-Specific Static Files](#adding-app-specific-static-files)
       - [Recommended Folder Structure](#recommended-folder-structure)
       - [Linking CSS Files in Templates](#linking-css-files-in-templates)
+    - [Create a Global `static` Folder](#create-a-global-static-folder)
+      - [Register the Static Path in settings.py](#register-the-static-path-in-settingspy)
+      - [Using Global Static Files in Templates](#using-global-static-files-in-templates)
 
 ## Installing Django
 
@@ -491,13 +494,13 @@ When using Django’s `Http404` shortcut, it is **required** that the error temp
 Django automatically looks for a template with this **exact name** when a `Http404` exception is raised.  
 If the file name is different, Django will not render the custom error page.
 
-### Static Files (CSS, JavaScript, Images)
+## Static Files (CSS, JavaScript, Images)
 
 Django provides built-in support for managing **static files** such as CSS, JavaScript, and images.
 
 ---
 
-#### Adding App-Specific Static Files
+### Adding App-Specific Static Files
 
 For **app-level static files**, Django automatically looks for a folder named `static` inside each installed app.  
 No additional configuration is required.
@@ -535,4 +538,29 @@ Then, reference the CSS file using the `{% static %}` tag:
 
 ```html
 <link rel="stylesheet" href="{% static 'challenges/challenge.css' %}">
+```
+
+### Create a Global `static` Folder
+
+At the same level as `manage.py`, create a folder named `static` and add `styles.css`.
+
+#### Register the Static Path in settings.py
+
+Django needs to be informed about global static directories.
+Open `settings.py` and add the path to `STATICFILES_DIRS`:
+
+```python
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+```
+
+#### Using Global Static Files in Templates
+
+Just like app-level static files, load the static tag and reference the file:
+
+```html
+{% load static %}
+
+<link rel="stylesheet" href="{% static "styles.css" %}">
 ```
